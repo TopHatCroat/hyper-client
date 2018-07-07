@@ -4,16 +4,29 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {clearError, tryLogin} from "../../modules/user";
 import {Redirect} from "react-router-dom";
+import {withStyles} from "@material-ui/core/styles/index";
+import withRoot from "../../withRoot";
+import Typography from '@material-ui/core/Typography';
+import {
+    Button,
+    TextField,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from '@material-ui/core';
 
 const styles = {
     errorMessage: {
-        backgroundColor: '#992020',
-        textColor: '#ffffff'
+        color: '#992020',
+    },
+    loginContainer: {
+        backgroundColor: '#992099',
     }
 };
 
 class Login extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -21,18 +34,22 @@ class Login extends React.Component {
         this.onPasswordChange.bind(this);
     }
 
-    onUsernameChange = (event) => {
-        this.props = {
+    onUsernameChange = (event, text) => {
+        this.setState({
             ...this.props,
             username: event.target.value,
-        }
+        })
     };
 
-    onPasswordChange = (event) => {
-        this.props = {
+    onPasswordChange = (event, text) => {
+        this.setState({
             ...this.props,
             password: event.target.value,
-        }
+        })
+    };
+
+    onLoginClicked = () => {
+        this.props.tryLogin(this.state.username, this.state.password);
     };
 
     render() {
@@ -45,16 +62,44 @@ class Login extends React.Component {
         }
 
         return (
-            <div>
-                <h1>Login</h1>
-                <div id="login">
-                    <input type="name" id="email" placeholder="Username" onChange={this.onUsernameChange}/>
-                    <input type="password" id="password" placeholder="Password"
-                           onChange={this.onPasswordChange}/>
-                    <button id="send" onClick={() => this.props.tryLogin(this.props.username, this.props.password)}>Send</button>
-                    <text style={styles.errorMessage}>{this.props.message}</text>
-                </div>
-            </div>
+            <Dialog
+                open
+                onRequestClose={this.props.isLoggedIn}
+                fullScreen={false}>
+                <DialogTitle>Subscribe</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        To subscribe to this website, please enter your email address here. We will send
+                        updates occationally.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="email"
+                        label="Email Address"
+                        type="email"
+                        fullWidth
+                        onChange={(e, v) => this.onUsernameChange(e, v) }
+                    />
+                    <TextField
+                        margin="dense"
+                        id="password"
+                        label="Password"
+                        type="password"
+                        fullWidth
+                        value={this.props.password}
+                        onChange={(e, v) => this.onPasswordChange(e, v) }
+                    />
+                    <Typography variant="body2" gutterBottom>
+                        {this.props.message}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.onLoginClicked} color="primary">
+                        Login
+                    </Button>
+                </DialogActions>
+            </Dialog>
         );
     }
 }
@@ -75,4 +120,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login)
+)(withStyles(styles)(Login))

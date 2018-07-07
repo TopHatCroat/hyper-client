@@ -13,8 +13,8 @@ class Routes extends React.Component {
             <div>
                 {this.props.authenticated && <NavBar/>}
                 <Switch>
-                    <AuthRoute exact path="/" component={Home}  authenticated={this.props.authenticated}/>
-                    <AuthRoute path="/about" component={About}  authenticated={this.props.authenticated}/>
+                    <AuthRoute exact path="/" component={Home} authenticated={this.props.authenticated}/>
+                    <AuthRoute path="/about" component={About} authenticated={this.props.authenticated}/>
                     <Route path="/login" component={Login}/>
                 </Switch>
             </div>

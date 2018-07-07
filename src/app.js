@@ -2,7 +2,7 @@ import React from 'react'
 import {ConnectedRouter} from 'connected-react-router'
 import {connect} from 'react-redux'
 import Routes from './routes'
-
+import 'typeface-roboto'
 
 class App extends React.Component {
 
