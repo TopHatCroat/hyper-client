@@ -1,23 +1,21 @@
 import React from "react";
 import {Redirect, Route} from "react-router";
-import { object, bool, string, func } from 'prop-types';
 
+class AuthRoute extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-export const AuthRoute = ({ component, exact = false, path, authenticated }) => (
-    <Route
-        exact={exact}
-        path={path}
-        render={props => (
-            authenticated ? (
-                React.createElement(component, props)
-            ) : (
-                <Redirect to={{
-                    pathname: '/login',
-                    state: { from: props.location }
-                }}/>
-            )
-        )}
-    />
-);
+    render() {
+        if (this.props.authenticated) {
+            return <Redirect to={{
+                pathname: '/login',
+                state: {from: this.props.location}
+            }}/>
+        } else
+            return this.props.renderOther()
+    }
+}
+
 
 export default AuthRoute;

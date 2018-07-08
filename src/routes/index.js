@@ -6,15 +6,24 @@ import Login from '../containers/login'
 import NavBar from '../containers/navbar'
 import AuthRoute from "./authRoute";
 
-class Routes extends React.Component {
 
+class Routes extends React.Component {
     render() {
         return (
             <div>
-                {this.props.authenticated && <NavBar/>}
                 <Switch>
-                    <AuthRoute exact path="/" component={Home} authenticated={this.props.authenticated}/>
-                    <AuthRoute path="/about" component={About} authenticated={this.props.authenticated}/>
+                    <AuthRoute exact path="/" authenticated={this.props.authenticated}
+                               renderOther={(props) =>
+                               <NavBar {...props} authenticated={this.props.authenticated}>
+                                   <Home {...props}/>
+                               </NavBar>
+                           }/>
+                    <AuthRoute path="/about" authenticated={this.props.authenticated}
+                           renderOther={(props) =>
+                               <NavBar {...props} authenticated={this.props.authenticated}>
+                                   <About {...props}/>
+                               </NavBar>
+                           }/>/>
                     <Route path="/login" component={Login}/>
                 </Switch>
             </div>

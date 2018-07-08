@@ -3,18 +3,16 @@ import {push} from 'connected-react-router'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {clearError, tryLogin} from "../../modules/user";
-import {Redirect} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles/index";
-import withRoot from "../../withRoot";
 import Typography from '@material-ui/core/Typography';
 import {
     Button,
-    TextField,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
+    TextField,
 } from '@material-ui/core';
 
 const styles = {
@@ -54,12 +52,6 @@ class Login extends React.Component {
 
     render() {
 
-        if (this.props.isLoggedIn === true) {
-            if (this.state != null )
-                return <Redirect to={this.state.from} />
-
-            return <Redirect to={'/'}/>
-        }
 
         return (
             <Dialog
@@ -79,7 +71,7 @@ class Login extends React.Component {
                         label="Email Address"
                         type="email"
                         fullWidth
-                        onChange={(e, v) => this.onUsernameChange(e, v) }
+                        onChange={(e, v) => this.onUsernameChange(e, v)}
                     />
                     <TextField
                         margin="dense"
@@ -87,8 +79,7 @@ class Login extends React.Component {
                         label="Password"
                         type="password"
                         fullWidth
-                        value={this.props.password}
-                        onChange={(e, v) => this.onPasswordChange(e, v) }
+                        onChange={(e, v) => this.onPasswordChange(e, v)}
                     />
                     <Typography variant="body2" gutterBottom>
                         {this.props.message}

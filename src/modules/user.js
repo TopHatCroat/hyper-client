@@ -7,7 +7,7 @@ export const CLEAR_ERROR = 'login:clear';
 const initialState = {
     isLoading: false,
     isError: false,
-    user: null,
+    user: {}, // set to null to enable login redirection
     message: ''
 };
 
@@ -62,7 +62,7 @@ export const tryLogin = (username, password) => {
             type: TRY_LOGIN,
         });
 
-        if(username === 'pero' && password === 'pero')
+        if (username === 'pero' && password === 'pero')
             return setTimeout(() => {
                 dispatch({
                     type: LOGIN_SUCCESS,
